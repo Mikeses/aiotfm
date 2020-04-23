@@ -548,6 +548,15 @@ class Client:
 				# :param player: :class:`aiotfm.Player` the player updated.
 				self.dispatch('player_update', before, after)
 
+		elif CCC == (144, 6): # Get cheese
+			player = self.room.get_player(pid=packet.read32())
+			amount = packet.read8()
+
+			# :desc: Called when a player gets a cheese
+			# :param player: :class:`aiotfm.Player` the player who got the cheese.
+			# :param amount: :class:`int` can be more than 1 in case of multiple cheese map.
+			self.dispatch('player_get_cheese', player, amount)
+
 		else:
 			if self.LOG_UNHANDLED_PACKETS:
 				print(CCC, bytes(packet.buffer)[2:])
